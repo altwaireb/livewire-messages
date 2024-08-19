@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -14,6 +14,12 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('messages') }}" :active="request()->routeIs('messages')">
+                        <div class="flex flex-row justify-between space-x-1 items-center">
+                            <span>{{ __('Messages') }}</span>
+                            <livewire:messages.messages-unread />
+                        </div>
                     </x-nav-link>
                 </div>
             </div>
@@ -110,6 +116,37 @@
 
                             <div class="border-t border-gray-200 dark:border-gray-600"></div>
 
+                            <div class="grid grid-flow-col justify-stretch items-center">
+                                <button
+                                        type="button"
+                                        x-on:click="darkMode = 'light'"
+                                        class="flex justify-center rounded-md p-2 outline-none transition duration-75 hover:bg-gray-50 focus-visible:bg-gray-50 dark:hover:bg-white/5 dark:focus-visible:bg-white/5 text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400"
+                                        x-bind:class="darkMode === 'light' ? 'bg-gray-50 text-primary-500 dark:bg-white/5 dark:text-primary-400' : 'text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400'">
+                                    <x-icons.sun class="h-5 w-5" />
+                                    <span class="sr-only">light</span>
+                                </button>
+
+                                <button
+                                        type="button"
+                                        x-on:click="darkMode = 'dark'"
+                                        class="flex justify-center rounded-md p-2 outline-none transition duration-75 hover:bg-gray-50 focus-visible:bg-gray-50 dark:hover:bg-white/5 dark:focus-visible:bg-white/5 text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400"
+                                        x-bind:class="darkMode === 'dark' ? 'bg-gray-50 text-primary-500 dark:bg-white/5 dark:text-primary-400' : 'text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400'">
+                                    <x-icons.moon class="h-5 w-5" />
+                                    <span class="sr-only">dark</span>
+                                </button>
+
+                                <button
+                                        type="button"
+                                        x-on:click="darkMode = 'system'"
+                                        class="flex justify-center rounded-md p-2 outline-none transition duration-75 hover:bg-gray-50 focus-visible:bg-gray-50 dark:hover:bg-white/5 dark:focus-visible:bg-white/5 text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400"
+                                        x-bind:class="darkMode === 'system' ? 'bg-gray-50 text-primary-500 dark:bg-white/5 dark:text-primary-400' : 'text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400'">
+                                    <x-icons.system class="h-5 w-5" />
+                                    <span class="sr-only">system</span>
+                                </button>
+                            </div>
+
+                            <div class="border-t border-gray-200 dark:border-gray-600"></div>
+
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
@@ -142,6 +179,12 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('messages') }}" :active="request()->routeIs('messages')">
+                <div class="flex flex-row justify-between items-center">
+                    <span>{{ __('Messages') }}</span>
+                    <livewire:messages.messages-unread />
+                </div>
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -164,6 +207,39 @@
                 <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+
+                <div class="border-t border-gray-200 dark:border-gray-600"></div>
+
+                <div class="grid grid-flow-col justify-stretch items-center">
+                    <button
+                            type="button"
+                            x-on:click="darkMode = 'light'"
+                            class="flex justify-center rounded-md p-2 outline-none transition duration-75 hover:bg-gray-50 focus-visible:bg-gray-50 dark:hover:bg-white/5 dark:focus-visible:bg-white/5 text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400"
+                            x-bind:class="darkMode === 'light' ? 'bg-gray-50 text-primary-500 dark:bg-white/5 dark:text-primary-400' : 'text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400'">
+                        <x-icons.sun class="h-5 w-5" />
+                        <span class="sr-only">light</span>
+                    </button>
+
+                    <button
+                            type="button"
+                            x-on:click="darkMode = 'dark'"
+                            class="flex justify-center rounded-md p-2 outline-none transition duration-75 hover:bg-gray-50 focus-visible:bg-gray-50 dark:hover:bg-white/5 dark:focus-visible:bg-white/5 text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400"
+                            x-bind:class="darkMode === 'dark' ? 'bg-gray-50 text-primary-500 dark:bg-white/5 dark:text-primary-400' : 'text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400'">
+                        <x-icons.moon class="h-5 w-5" />
+                        <span class="sr-only">dark</span>
+                    </button>
+
+                    <button
+                            type="button"
+                            x-on:click="darkMode = 'system'"
+                            class="flex justify-center rounded-md p-2 outline-none transition duration-75 hover:bg-gray-50 focus-visible:bg-gray-50 dark:hover:bg-white/5 dark:focus-visible:bg-white/5 text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400"
+                            x-bind:class="darkMode === 'system' ? 'bg-gray-50 text-primary-500 dark:bg-white/5 dark:text-primary-400' : 'text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400'">
+                        <x-icons.system class="h-5 w-5" />
+                        <span class="sr-only">system</span>
+                    </button>
+                </div>
+
+                <div class="border-t border-gray-200 dark:border-gray-600"></div>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">

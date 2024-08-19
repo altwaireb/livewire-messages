@@ -28,6 +28,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'username' => str_replace('.', '_', fake()->userName()),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -37,6 +38,26 @@ class UserFactory extends Factory
             'profile_photo_path' => null,
             'current_team_id' => null,
         ];
+    }
+
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure(): static
+    {
+        return $this->afterMaking(function (User $user) {
+            return $user->assignRole('user');
+        });
+    }
+
+    /**
+     * Indicate that the user is an admin.
+     */
+    public function admin(): UserFactory
+    {
+        return $this->assignRole('super_admin');
     }
 
     /**
@@ -68,5 +89,13 @@ class UserFactory extends Factory
                 ->when(is_callable($callback), $callback),
             'ownedTeams'
         );
+    }
+
+    /**
+     * @param  array|\Spatie\Permission\Contracts\Role|string  ...$roles
+     */
+    private function assignRole(...$roles): UserFactory
+    {
+        return $this->afterCreating(fn (User $user) => $user->syncRoles($roles));
     }
 }

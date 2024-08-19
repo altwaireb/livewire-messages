@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Messages\MessageIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,4 +15,6 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/messages', MessageIndex::class)->name('messages');
 });
